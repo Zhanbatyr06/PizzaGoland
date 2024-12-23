@@ -21,9 +21,9 @@ var (
 
 // Структура для пользователя
 type User struct {
-	ID   primitive.ObjectID `bson:"_id,omitempty" json:"id"`
-	Name string             `json:"name"`
-	Age  int                `json:"age"`
+	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Nickname string             `json:"nickname"`
+	Password int                `json:"password"`
 }
 
 // Структура для обработки входящих данных
@@ -218,7 +218,7 @@ func main() {
 	defer cancel()
 
 	var err error
-	client, err = mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
+	client, err = mongo.Connect(ctx, options.Client().ApplyURI("mongodb+srv://Admin:KTQ5mPQgGvr5hIow@backenddatabase.z8o88.mongodb.net/backenddatabase"))
 	if err != nil {
 		log.Fatalf("Ошибка подключения к MongoDB: %v", err)
 	}
@@ -230,13 +230,10 @@ func main() {
 	fmt.Println("Успешное подключение к MongoDB!")
 
 	// Подключение к коллекции
-	database := client.Database("mongo")
+	database := client.Database("backenddatabase")
 	collection = database.Collection("users")
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "Welcome to the PizzaGoland API!")
-	})
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/", fs)
 
 	// Настройка маршрутов
 	http.HandleFunc("/users", getUsersHandler)         // GET /users для получения всех пользователей
