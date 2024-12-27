@@ -218,7 +218,7 @@ func main() {
 	defer cancel()
 
 	var err error
-	client, err = mongo.Connect(ctx, options.Client().ApplyURI("mongodb+srv://Admin:KTQ5mPQgGvr5hIow@backenddatabase.z8o88.mongodb.net/backenddatabase"))
+	client, err = mongo.Connect(ctx, options.Client().ApplyURI("mongodb+srv://Zhanba:UQvsLLt8Tf5lBIvt@godatabase.fzzyv.mongodb.net/go?retryWrites=true&w=majority&appName=GoDatabase"))
 	if err != nil {
 		log.Fatalf("Ошибка подключения к MongoDB: %v", err)
 	}
@@ -230,10 +230,11 @@ func main() {
 	fmt.Println("Успешное подключение к MongoDB!")
 
 	// Подключение к коллекции
-	database := client.Database("backenddatabase")
+	database := client.Database("go")
 	collection = database.Collection("users")
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/", fs)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./static/main.html")
+	})
 
 	// Настройка маршрутов
 	http.HandleFunc("/users", getUsersHandler)         // GET /users для получения всех пользователей
