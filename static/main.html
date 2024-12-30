@@ -2,32 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CRUD operations</title>
-    <link rel="stylesheet" href="style.css">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Frontend</title>
 </head>
 <body>
-<h1>CRUD operations</h1>
+<h1>CRUD Operations</h1>
+
+<h2>Add User</h2>
 <input type="text" id="nickname" placeholder="Nickname">
-<input type="number" id="password" placeholder="Password">
-<button type="submit" id="regAcc">Add person</button>
-<br>
-<br>
-<button type="button">Show all users</button>
-<br>
-<br>
-<input type="text" id="idUsr" placeholder="Write a ID of account">
+<input type="text" id="password" placeholder="Password">
+<button onclick="addUser()">Add User</button>
 
-<button type="submit" id="updUsr">Find user</button>
-<button type="submit" id="dltUsr">Delete</button>
-<br>
-<br>
-<input type="text" id="editpassword" placeholder="Write new password">
-<button type="submit" id="nwpassword">Save</button>
+<h2>Get All Users</h2>
+<button onclick="getUsers()">Get Users</button>
+<ul id="userList">
 
-<br>
+</ul>
+<ul id="singleusr">
 
+</ul>
+
+<h2>Update or Delete User</h2>
+<input type="text" id="userId" placeholder="User ID">
+<input type="text" id="newNickname" placeholder="New Nickname">
+<input type="text" id="newPassword" placeholder="New Password">
+<button onclick="updateUser()">Update User</button>
+<button onclick="deleteUser()">Delete User</button>
+<button onclick="findUser()">Find User</button>
+
+<!-- Link to External JavaScript -->
 <script src="script.js"></script>
 </body>
-
 </html>

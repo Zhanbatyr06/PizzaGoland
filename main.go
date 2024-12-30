@@ -4,247 +4,141 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"log"
-	"net/http"
-	"time"
 )
 
-// Глобальные переменные для базы данных
-var (
-	client     *mongo.Client
-	collection *mongo.Collection
-)
+var client *mongo.Client
+var collection *mongo.Collection
 
-// Структура для пользователя
+// User struct to represent the MongoDB document
 type User struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Nickname string             `json:"nickname"`
-	Password int                `json:"password"`
-}
-
-// Структура для обработки входящих данных
-type RequestData struct {
-	Message string `json:"message"`
-}
-
-// Структура для формирования ответа
-type ResponseData struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
-}
-
-// Обработчик для получения всех пользователей
-func getUsersHandler(w http.ResponseWriter, r *http.Request) {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	cursor, err := collection.Find(ctx, bson.D{})
-	if err != nil {
-		http.Error(w, "Ошибка при чтении данных из MongoDB", http.StatusInternalServerError)
-		return
-	}
-	defer cursor.Close(ctx)
-
-	var users []User
-	if err := cursor.All(ctx, &users); err != nil {
-		http.Error(w, "Ошибка при обработке данных из MongoDB", http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(users)
-}
-
-// Обработчик для добавления нового пользователя
-func addUserHandler(w http.ResponseWriter, r *http.Request) {
-	var user User
-	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
-		http.Error(w, "Некорректный формат запроса", http.StatusBadRequest)
-		return
-	}
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	result, err := collection.InsertOne(ctx, user)
-	if err != nil {
-		http.Error(w, "Ошибка при добавлении пользователя в MongoDB", http.StatusInternalServerError)
-		return
-	}
-
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(result.InsertedID)
-}
-
-// Обработчик для получения пользователя по ID
-func getUserByIDHandler(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Query().Get("id")
-	if id == "" {
-		http.Error(w, "ID не указан", http.StatusBadRequest)
-		return
-	}
-
-	objectID, err := primitive.ObjectIDFromHex(id)
-	if err != nil {
-		http.Error(w, "Некорректный ID", http.StatusBadRequest)
-		return
-	}
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	var user User
-	err = collection.FindOne(ctx, bson.M{"_id": objectID}).Decode(&user)
-	if err == mongo.ErrNoDocuments {
-		http.Error(w, "Пользователь не найден", http.StatusNotFound)
-		return
-	} else if err != nil {
-		http.Error(w, "Ошибка при получении пользователя", http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(user)
-}
-
-// Обработчик для обновления пользователя по ID
-func updateUserHandler(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Query().Get("id")
-	if id == "" {
-		http.Error(w, "ID не указан", http.StatusBadRequest)
-		return
-	}
-
-	objectID, err := primitive.ObjectIDFromHex(id)
-	if err != nil {
-		http.Error(w, "Некорректный ID", http.StatusBadRequest)
-		return
-	}
-
-	var updateData User
-	if err := json.NewDecoder(r.Body).Decode(&updateData); err != nil {
-		http.Error(w, "Некорректный формат запроса", http.StatusBadRequest)
-		return
-	}
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	update := bson.M{"$set": updateData}
-	_, err = collection.UpdateOne(ctx, bson.M{"_id": objectID}, update)
-	if err != nil {
-		http.Error(w, "Ошибка при обновлении пользователя", http.StatusInternalServerError)
-		return
-	}
-
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Пользователь обновлен")
-}
-
-// Обработчик для удаления пользователя по ID
-func deleteUserHandler(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Query().Get("id")
-	if id == "" {
-		http.Error(w, "ID не указан", http.StatusBadRequest)
-		return
-	}
-
-	objectID, err := primitive.ObjectIDFromHex(id)
-	if err != nil {
-		http.Error(w, "Некорректный ID", http.StatusBadRequest)
-		return
-	}
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	_, err = collection.DeleteOne(ctx, bson.M{"_id": objectID})
-	if err != nil {
-		http.Error(w, "Ошибка при удалении пользователя", http.StatusInternalServerError)
-		return
-	}
-
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Пользователь удален")
-}
-
-// Обработчик для получения POST и GET запросов с JSON-данными
-func handler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		var requestData RequestData
-
-		err := json.NewDecoder(r.Body).Decode(&requestData)
-		if err != nil || requestData.Message == "" {
-			sendResponse(w, ResponseData{
-				Status:  "fail",
-				Message: "Некорректное JSON-сообщение",
-			}, http.StatusBadRequest)
-			return
-		}
-
-		fmt.Println("Получено сообщение:", requestData.Message)
-
-		sendResponse(w, ResponseData{
-			Status:  "success",
-			Message: "Данные успешно приняты",
-		}, http.StatusOK)
-	} else if r.Method == http.MethodGet {
-		sendResponse(w, ResponseData{
-			Status:  "success",
-			Message: "Используйте POST для отправки данных",
-		}, http.StatusOK)
-	} else {
-		sendResponse(w, ResponseData{
-			Status:  "fail",
-			Message: "Метод не поддерживается",
-		}, http.StatusMethodNotAllowed)
-	}
-}
-
-// Функция для отправки JSON-ответа
-func sendResponse(w http.ResponseWriter, response ResponseData, statusCode int) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(statusCode)
-	json.NewEncoder(w).Encode(response)
+	Password string             `json:"password"`
 }
 
 func main() {
-	// Подключение к MongoDB
+	// MongoDB connection setup
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	var err error
 	client, err = mongo.Connect(ctx, options.Client().ApplyURI("mongodb+srv://Zhanba:UQvsLLt8Tf5lBIvt@godatabase.fzzyv.mongodb.net/go?retryWrites=true&w=majority&appName=GoDatabase"))
 	if err != nil {
-		log.Fatalf("Ошибка подключения к MongoDB: %v", err)
+		log.Fatalf("Failed to connect to MongoDB: %v", err)
 	}
 
-	err = client.Ping(ctx, nil)
-	if err != nil {
-		log.Fatalf("Не удалось подключиться к MongoDB: %v", err)
-	}
-	fmt.Println("Успешное подключение к MongoDB!")
+	collection = client.Database("go").Collection("users")
+	fmt.Println("Connected to MongoDB")
 
-	// Подключение к коллекции
-	database := client.Database("go")
-	collection = database.Collection("users")
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./static/main.html")
-	})
+	// Routes
+	http.HandleFunc("/users", usersHandler)
+	http.HandleFunc("/user", userHandler)
 
-	// Настройка маршрутов
-	http.HandleFunc("/users", getUsersHandler)         // GET /users для получения всех пользователей
-	http.HandleFunc("/add_user", addUserHandler)       // POST /add-user для добавления пользователя
-	http.HandleFunc("/json", handler)                  // Обработка JSON запросов POST и GET
-	http.HandleFunc("/user", getUserByIDHandler)       // GET /user?id= для получения пользователя по ID
-	http.HandleFunc("/update-user", updateUserHandler) // PUT /update-user?id= для обновления пользователя
-	http.HandleFunc("/delete-user", deleteUserHandler) // DELETE /delete-user?id= для удаления пользователя
+	// Serve frontend files
+	http.Handle("/", http.FileServer(http.Dir("./static")))
 
-	// Запуск сервера
-	fmt.Println("Сервер запущен на http://localhost:8080")
+	// Start server
+	fmt.Println("Server running on http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+// Handler for fetching all users or adding a new user
+func usersHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	if r.Method == http.MethodGet {
+		// Fetch all users
+		cursor, err := collection.Find(context.Background(), bson.D{})
+		if err != nil {
+			http.Error(w, "Error fetching users", http.StatusInternalServerError)
+			return
+		}
+		defer cursor.Close(context.Background())
+
+		var users []User
+		if err = cursor.All(context.Background(), &users); err != nil {
+			http.Error(w, fmt.Sprintf(
+				"Error decoding users: %v",
+				err,
+			), http.StatusInternalServerError)
+			return
+		}
+		json.NewEncoder(w).Encode(users)
+
+	} else if r.Method == http.MethodPost {
+		// Add a new user
+		var user User
+		if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+			http.Error(w, "Invalid request body", http.StatusBadRequest)
+			return
+		}
+
+		result, err := collection.InsertOne(context.Background(), user)
+		if err != nil {
+			http.Error(w, "Error saving user", http.StatusInternalServerError)
+			return
+		}
+		json.NewEncoder(w).Encode(result.InsertedID)
+	}
+}
+
+// Handler for fetching, updating, or deleting a user by ID
+func userHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	id := r.URL.Query().Get("id")
+
+	if id == "" {
+		http.Error(w, "ID not provided", http.StatusBadRequest)
+		return
+	}
+
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		http.Error(w, "Invalid ID", http.StatusBadRequest)
+		return
+	}
+
+	switch r.Method {
+	case http.MethodGet:
+		// Fetch user by ID
+		var user User
+		err := collection.FindOne(context.Background(), bson.M{"_id": objectID}).Decode(&user)
+		if err != nil {
+			http.Error(w, "User not found", http.StatusNotFound)
+			return
+		}
+		json.NewEncoder(w).Encode(user)
+
+	case http.MethodPut:
+		// Update user by ID
+		var updatedUser User
+		if err := json.NewDecoder(r.Body).Decode(&updatedUser); err != nil {
+			http.Error(w, "Invalid request body", http.StatusBadRequest)
+			return
+		}
+
+		_, err := collection.UpdateOne(context.Background(), bson.M{"_id": objectID}, bson.M{"$set": updatedUser})
+		if err != nil {
+			http.Error(w, "Error updating user", http.StatusInternalServerError)
+			return
+		}
+		w.Write([]byte("User updated"))
+
+	case http.MethodDelete:
+		// Delete user by ID
+		_, err := collection.DeleteOne(context.Background(), bson.M{"_id": objectID})
+		if err != nil {
+			http.Error(w, "Error deleting user", http.StatusInternalServerError)
+			return
+		}
+		w.Write([]byte("User deleted"))
+	}
 }

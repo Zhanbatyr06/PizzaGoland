@@ -1,107 +1,105 @@
-document.getElementById('regAcc').addEventListener('click', async () => {
-    const Nickname = document.getElementById('nickname').value;
-    const Password = document.getElementById('password').value;
+const baseUrl = "http://localhost:8080";
 
-    if (!Nickname || !Password) {
-        alert('Please enter both nickname and password.');
+async function addUser() {
+    const nickname = document.getElementById('nickname').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch(`${baseUrl}/users`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nickname, password })
+    });
+
+    if (response.ok) {
+        alert("User added successfully!");
+        getUsers();
+    } else {
+        alert("Failed to add user.");
+    }
+}
+
+async function getUsers() {
+    const response = await fetch(`${baseUrl}/users`,{
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+
+    });
+    const users = await response.json();
+    const userList = document.getElementById('userList');
+    userList.innerHTML = "";
+    users.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = `ID: ${user.id}, Nickname: ${user.nickname}, Password: ${user.password}`;
+        userList.appendChild(li);
+    });
+}
+
+async function updateUser() {
+    const id = document.getElementById('userId').value;
+    const nickname = document.getElementById('newNickname').value;
+    const password = document.getElementById('newPassword').value;
+
+    const response = await fetch(`${baseUrl}/user?id=${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nickname, password })
+    });
+
+    if (response.ok) {
+        alert("User updated successfully!");
+        getUsers();
+    } else {
+        alert("Failed to update user.");
+    }
+}
+
+async function deleteUser() {
+    const id = document.getElementById('userId').value;
+
+    const response = await fetch(`${baseUrl}/user?id=${id}`, {
+        method: 'DELETE'
+    });
+
+    if (response.ok) {
+        alert("User deleted successfully!");
+        getUsers();
+    } else {
+        alert("Failed to delete user.");
+    }
+}
+async function findUser() {
+    // Get the user ID from the input field
+    const id = document.getElementById('userId').value;
+
+    if (!id) {
+        alert("Please enter a user ID.");
         return;
     }
 
     try {
-        const response = await fetch('/add_user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ Nickname, Password })
+        // Fetch the user data from the backend
+        const response = await fetch(`${baseUrl}/user?id=${encodeURIComponent(id)}`, {
+            method: 'GET',
         });
 
-        const result = await response.json();
-        alert(result.message || 'User added successfully!');
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to add user.');
-    }
-});
-
-document.querySelector('button[type="button"]').addEventListener('click', async () => {
-    try {
-        const response = await fetch('/users');
-        const users = await response.json();
-
-        alert(JSON.stringify(users, null, 2)); // Display users in a readable format
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to fetch users.');
-    }
-});
-
-document.getElementById('updUsr').addEventListener('click', async () => {
-    const userId = document.getElementById('idUsr').value;
-
-    if (!userId) {
-        alert('Please enter a user ID.');
-        return;
-    }
-
-    try {
-        const response = await fetch(`/user`);
-        const user = await response.json();
-
-        if (response.ok) {
-            alert(`User found: ${JSON.stringify(user, null, 2)}`);
-        } else {
-            alert(user.message || 'User not found.');
+        if (!response.ok) {
+            throw new Error(`Failed to find user. Status: ${response.status}`);
         }
+
+        const userfind = await response.json();
+
+        // Display the user information
+        const userList = document.getElementById('singleusr');
+        userList.innerHTML = ""; // Clear existing content
+
+        // Create and append user details
+        const li = document.createElement('li');
+        li.textContent = `ID: ${userfind.id}, Nickname: ${userfind.nickname}, Password: ${userfind.password}`;
+        userList.appendChild(li);
+
+        alert("User found!");
     } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to find user.');
+        console.error("Error fetching user:", error);
+        alert("Failed to find user. Please check the console for details.");
     }
-});
-
-document.getElementById('dltUsr').addEventListener('click', async () => {
-    const userId = document.getElementById('idUsr').value;
-
-    if (!userId) {
-        alert('Please enter a user ID.');
-        return;
-    }
-
-    try {
-        const response = await fetch(`/delete-user`, {
-            method: 'DELETE'
-        });
-
-        const result = await response.json();
-        alert(result.message || 'User deleted successfully!');
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to delete user.');
-    }
-});
-
-document.getElementById('nwpassword').addEventListener('click', async () => {
-    const userId = document.getElementById('idUsr').value;
-    const newPassword = document.getElementById('editpassword').value;
-
-    if (!userId || !newPassword) {
-        alert('Please enter both user ID and new password.');
-        return;
-    }
-
-    try {
-        const response = await fetch(`/update-user`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({password: newPassword})
-        });
-
-        const result = await response.json();
-        alert(result.message || 'Password updated successfully!');
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to update password');
-    }
-});
+}
