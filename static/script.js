@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8080";
+const baseUrl = "http://localhost:8080/api";
 
 async function addUser() {
     const nickname = document.getElementById('nickname').value;
