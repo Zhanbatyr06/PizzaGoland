@@ -1,4 +1,4 @@
-module pizzagoland
+module github.com/Zhanbatyr06/PizzaGoland
 
 go 1.23.4
 
