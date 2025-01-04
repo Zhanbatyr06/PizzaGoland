@@ -3,9 +3,9 @@ package handlers
 import (
 	"context"
 	"encoding/json"
+	"github.com/Zhanbatyr06/PizzaGoland/models"
+	"github.com/Zhanbatyr06/PizzaGoland/utils"
 	"net/http"
-	"pizzagoland/models"
-	"pizzagoland/utils"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"

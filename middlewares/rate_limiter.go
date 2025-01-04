@@ -1,10 +1,10 @@
 package middlewares
 
 import (
+	"github.com/Zhanbatyr06/PizzaGoland/utils"
 	"net/http"
 
 	"golang.org/x/time/rate"
-	"pizzagoland/utils"
 )
 
 var limiter = rate.NewLimiter(1, 3) // 1 запрос в секунду, до 3 запросов в буфере
