@@ -5,7 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8082fb38-714c-4f68-992a-27f5719f8d36" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/middlewares/rate_limiter.go" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares/rate_limiter.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/app.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/app/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/controllers/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/controllers/users/allusers.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/controllers/users/controller.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/controllers/users/create.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/controllers/users/delete.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/controllers/users/filter.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/controllers/users/get.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/controllers/users/sorting.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/controllers/users/update.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/http/utils/utils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repository/users/repo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/user_handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/users_handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +40,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../Program Files/Go" />
+  <component name="GOROOT" url="file://$USER_HOME$/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.23.4.windows-amd64" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -41,6 +59,7 @@
   &quot;keyToString&quot;: {
     &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Go Build.go build github.com/Zhanbatyr06/PizzaGoland/cmd/app.executor&quot;: &quot;Run&quot;,
     &quot;HTTP Request.All in generated-requests.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
@@ -48,10 +67,11 @@
     &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.modules.automatic.dependencies.download&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Zhanbatyr&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Nadir&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -60,24 +80,32 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\AITUAssignments\PizzaGoland\repository\users" />
+      <recent name="D:\AITUAssignments\PizzaGoland\repository" />
       <recent name="D:\AITUAssignments\PizzaGoland\static" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="All in generated-requests" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http">
+    <configuration name="go build github.com/Zhanbatyr06/PizzaGoland/cmd/app" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="PizzaGoland" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/Zhanbatyr06/PizzaGoland/cmd/app" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/cmd/app/main.go" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.All in generated-requests" />
+        <item itemvalue="Go Build.go build github.com/Zhanbatyr06/PizzaGoland/cmd/app" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-gosdk-33c477a475b1-e0158606a674-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-241.17890.21" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-GO-241.17890.21" />
+        <option value="bundled-gosdk-d297c17c1fbd-d82d926f19eb-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-243.22562.186" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-GO-243.22562.186" />
       </set>
     </attachedChunks>
   </component>

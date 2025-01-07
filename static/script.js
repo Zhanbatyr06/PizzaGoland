@@ -1,6 +1,8 @@
 const baseUrl = "http://localhost:8080/api";
 
+
 async function addUser() {
+    console.log("fahof");
     const nickname = document.getElementById('nickname').value;
     const password = document.getElementById('password').value;
 
@@ -19,11 +21,18 @@ async function addUser() {
 }
 
 async function getUsers() {
+
     const response = await fetch(`${baseUrl}/users`,{
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
 
     });
+    if (response.ok) {
+        alert("Working");
+    }
+    else{
+        alert("qwer");
+    }
     const users = await response.json();
     const userList = document.getElementById('userList');
     userList.innerHTML = "";
