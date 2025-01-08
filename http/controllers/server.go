@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+
 	"github.com/Zhanbatyr06/PizzaGoland/http/controllers/users"
 	users2 "github.com/Zhanbatyr06/PizzaGoland/repository/users"
 	"net/http"
@@ -16,6 +17,9 @@ func New(usersR *users2.Repo) Server {
 	mux := http.NewServeMux()
 	usersC := users.New(usersR)
 	usersC.Register(mux)
+	staticC := NewStaticController("static")
+	mux.HandleFunc("/", staticC.ServeHTML)
+	mux.Handle("/static/", http.StripPrefix("/static/", staticC.ServeStaticFiles()))
 	return Server{
 		httpServer: &http.Server{
 			Addr:    ":8080",

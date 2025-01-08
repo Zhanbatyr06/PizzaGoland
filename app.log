@@ -265,3 +265,14 @@
 {"action":"fetch_users_by_sorting","level":"info","msg":"Fetching all users by sorting","time":"2025-01-07T20:10:27+05:00"}
 {"count":14,"level":"info","msg":"Users fetched successfully","time":"2025-01-07T20:10:27+05:00"}
 {"level":"info","msg":"Processing sorting request","sort":"desc","time":"2025-01-07T20:10:27+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-08T13:08:03+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-08T13:08:45+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-08T13:09:04+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-08T13:11:12+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-08T13:14:58+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-08T13:15:34+05:00"}
+{"action":"fetch_users","level":"info","msg":"Fetching all users","time":"2025-01-08T13:16:06+05:00"}
+{"level":"info","msg":"Users fetched successfully","time":"2025-01-08T13:16:07+05:00","user_count":14}
+{"level":"info","msg":"Users fetched successfully","time":"2025-01-08T13:16:07+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-08T13:47:47+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-08T13:48:49+05:00"}
