@@ -1,16 +1,18 @@
-const baseUrl = "http://localhost:8080/api";
+const baseUrl = "http://localhost:8080/";
 
 
 async function addUser() {
-    console.log("fahof");
+
     const nickname = document.getElementById('nickname').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch(`${baseUrl}/users`, {
+    const response = await fetch(`${baseUrl}/add_user`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nickname, password })
     });
+    console.log(JSON.stringify({ nickname, password }));
+
 
     if (response.ok) {
         alert("User added successfully!");
@@ -22,16 +24,16 @@ async function addUser() {
 
 async function getUsers() {
 
-    const response = await fetch(`${baseUrl}/users`,{
+    const response = await fetch(`${baseUrl}/all_users`,{
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
 
     });
     if (response.ok) {
-        alert("Working");
+        alert("Users fetched successfully!");
     }
     else{
-        alert("qwer");
+        alert("Error in the server");
     }
     const users = await response.json();
     const userList = document.getElementById('userList');
@@ -48,7 +50,7 @@ async function updateUser() {
     const nickname = document.getElementById('newNickname').value;
     const password = document.getElementById('newPassword').value;
 
-    const response = await fetch(`${baseUrl}/user?id=${id}`, {
+    const response = await fetch(`${baseUrl}/update_user?id=${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nickname, password })

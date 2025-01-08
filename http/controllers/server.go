@@ -17,9 +17,9 @@ func New(usersR *users2.Repo) Server {
 	mux := http.NewServeMux()
 	usersC := users.New(usersR)
 	usersC.Register(mux)
-	staticC := NewStaticController("static")
-	mux.HandleFunc("/", staticC.ServeHTML)
-	mux.Handle("/static/", http.StripPrefix("/static/", staticC.ServeStaticFiles()))
+	//staticC := NewStaticController("/static")
+	//mux.HandleFunc("/", staticC.ServeHTML)
+	mux.Handle("/", http.FileServer(http.Dir("./static")))
 	return Server{
 		httpServer: &http.Server{
 			Addr:    ":8080",
