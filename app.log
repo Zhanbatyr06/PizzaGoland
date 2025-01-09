@@ -359,3 +359,11 @@
 {"action":"fetch_users","level":"info","msg":"Fetching all users","time":"2025-01-08T17:17:24+05:00"}
 {"level":"info","msg":"Users fetched successfully","time":"2025-01-08T17:17:24+05:00","user_count":14}
 {"level":"info","msg":"Users fetched successfully","time":"2025-01-08T17:17:24+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-09T17:29:18+05:00"}
+{"action":"fetch_users","level":"info","msg":"Fetching all users","time":"2025-01-09T17:29:28+05:00"}
+{"level":"info","msg":"Users fetched successfully","time":"2025-01-09T17:29:29+05:00","user_count":23}
+{"level":"info","msg":"Users fetched successfully","time":"2025-01-09T17:29:29+05:00"}
+{"action":"fetch_users","level":"info","msg":"Fetching all users","time":"2025-01-09T17:29:32+05:00"}
+{"level":"info","msg":"Users fetched successfully","time":"2025-01-09T17:29:32+05:00","user_count":23}
+{"level":"info","msg":"Users fetched successfully","time":"2025-01-09T17:29:32+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-09T17:35:10+05:00"}
