@@ -23,4 +23,5 @@ func (c Controller) Register(mux *http.ServeMux) {
 	mux.HandleFunc("/sort_user", c.SortingUser)
 	mux.HandleFunc("/support", SupportHandler)
 	mux.HandleFunc("/profile", ProfileHandler)
+	mux.HandleFunc("/pagination", c.Pagination)
 }

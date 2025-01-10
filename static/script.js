@@ -144,21 +144,97 @@ async function filterUsers() {
         alert("Error occurred while fetching users.");
     }
 }
-async function sortUsers(){
-    const sort = document.getElementById('sortInput').value;
+async function sortUsers() {
+    const sort = document.getElementById('sortingInput').value;
+    console.log(`Sorting criteria: ${sort}`);
+
     const url = `${baseUrl}/sort_user?sort=${sort}`;
+    console.log(`Request URL: ${url}`);
+
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
+        console.log(`Response status: ${response.status}`);
+
         if (response.ok) {
             const users = await response.json();
+            console.log("Fetched users:", users);
+
+            const userList = document.getElementById('userList');
+            userList.innerHTML = "";
+
+            users.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = `ID: ${user.id}, Nickname: ${user.nickname}, Password: ${user.password}`;
+                userList.appendChild(li);
+            });
+        } else {
+            console.error("Failed to fetch users. Status:", response.status);
+            alert("Failed to fetch users.");
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.error("Error fetching users:", error);
         alert("Error occurred while fetching users.");
     }
-
 }
+let currentPage = 1;
+const limit = 4; //
+
+async function fetchUsers(page = 1) {
+    const url = `${baseUrl}/users?page=${page}&limit=${limit}`;
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            const users = result.data; // Пользователи
+            const totalPages = result.totalPages; // Всего страниц
+            currentPage = result.currentPage; // Текущая страница
+
+            // Обновить интерфейс
+            const userList = document.getElementById('userList');
+            userList.innerHTML = ""; // Очистить текущий список
+            users.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = `ID: ${user.id}, Nickname: ${user.nickname}`;
+                userList.appendChild(li);
+            });
+
+            // Обновить кнопки пагинации
+            updatePaginationControls(totalPages);
+        } else {
+            console.error("Failed to fetch users. Status:", response.status);
+        }
+    } catch (error) {
+        console.error("Error fetching users:", error);
+    }
+}
+
+function updatePaginationControls(totalPages) {
+    const prevButton = document.querySelector('#paginationControls button:nth-child(1)');
+    const nextButton = document.querySelector('#paginationControls button:nth-child(3)');
+    const currentPageSpan = document.getElementById('currentPage');
+
+    prevButton.disabled = currentPage <= 1;
+    nextButton.disabled = currentPage >= totalPages;
+    currentPageSpan.textContent = currentPage;
+}
+
+function nextPage() {
+    currentPage++;
+    fetchUsers(currentPage);
+}
+
+function prevPage() {
+    currentPage--;
+    fetchUsers(currentPage);
+}
+
+// Первоначальная загрузка
+fetchUsers();
+

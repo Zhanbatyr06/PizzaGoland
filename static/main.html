@@ -34,7 +34,12 @@
 <input type="text" id="sortingInput" placeholder="Sorting by asc or desc">
 
 <button onclick="filterUsers()">Filter User</button>
-<button onclick="sortUsers()">Filter User</button>
+<button onclick="sortUsers()">Sort User</button>
+<div id="paginationControls">
+    <button onclick="prevPage()">Previous</button>
+    <span id="currentPage">1</span>
+    <button onclick="nextPage()">Next</button>
+</div>
 
 <!-- Link to External JavaScript -->
 <script src="script.js"></script>

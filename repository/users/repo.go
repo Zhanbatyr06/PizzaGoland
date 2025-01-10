@@ -197,6 +197,10 @@ func (r *Repo) UserSorting(typeofsorting string) ([]models.User, error) {
 	return users, nil
 }
 
+//func (r *Repo) UserPaging(page int, limit int) ([]models.User, error) {
+//	utils.Logger.WithField("action", "fetch_users_by_paging").Info("Fetching all users by paging")
+//}
+
 func (r Repo) getObjectID(id string) (primitive.ObjectID, error) {
 	return primitive.ObjectIDFromHex(id)
 }
