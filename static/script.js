@@ -162,3 +162,27 @@ async function sortUsers(){
     }
 
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const userId = "67890"; // Укажите ID пользователя
+
+    fetch(`/interactions?userId=${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                console.error("Failed to fetch interactions");
+                return [];
+            }
+            return response.json();
+        })
+        .then(interactions => {
+            const historyList = document.getElementById('interactionHistory');
+            historyList.innerHTML = ""; // Очистка списка перед добавлением новых элементов
+            interactions.forEach(interaction => {
+                const li = document.createElement('li');
+                li.textContent = `${interaction.Type} at ${interaction.Details.Timestamp}`;
+                historyList.appendChild(li);
+            });
+        })
+        .catch(err => console.error("Error loading interactions:", err));
+});
+
