@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+<body>
+<h1>User Profile</h1>
+
+<!-- Личные данные -->
+<h2>Manage Personal Data</h2>
+<form id="updatePersonalData" method="POST" action="/update-profile">
+    <label for="updateEmail">Email:</label>
+    <input type="email" id="updateEmail" name="email" placeholder="Enter new email" required>
+    <label for="updatePassword">Password:</label>
+    <input type="password" id="updatePassword" name="password" placeholder="Enter new password" required>
+    <button type="submit">Update</button>
+</form>
+
+<hr>
+<h2>Interaction History</h2>
+<ul id="interactionHistory"></ul>
+
+<script>
+    async function fetchInteractions() {
+        const userId = "67890"; // Замените на текущий userId
+        const response = await fetch(`/api/interactions?userId=${userId}`);
+        const interactions = await response.json();
+
+        const historyList = document.getElementById("interactionHistory");
+        historyList.innerHTML = "";
+
+        interactions.forEach(interaction => {
+            const li = document.createElement("li");
+            li.textContent = `${interaction.type} - ${interaction.details.productName || "No details"} (${new Date(interaction.timestamp).toLocaleString()})`;
+            historyList.appendChild(li);
+        });
+    }
+
+    fetchInteractions();
+</script>
+
+<!-- Сообщение в поддержку -->
+<h2>Contact Support</h2>
+<form method="POST" action="/support">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="subject">Subject:</label>
+    <input type="text" id="subject" name="subject" required>
+
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" required></textarea>
+
+    <button type="submit">Send</button>
+</form>
+
+</body>
+</html>
