@@ -50,7 +50,7 @@ async function updateUser() {
     const nickname = document.getElementById('newNickname').value;
     const password = document.getElementById('newPassword').value;
 
-    const response = await fetch(`${baseUrl}/update_user?id=${id}`, {
+    const response = await fetch(`${baseUrl}/update_user`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nickname, password })
@@ -67,7 +67,7 @@ async function updateUser() {
 async function deleteUser() {
     const id = document.getElementById('userId').value;
 
-    const response = await fetch(`${baseUrl}/user?id=${id}`, {
+    const response = await fetch(`${baseUrl}/delete_user?id=${id}`, {
         method: 'DELETE'
     });
 
@@ -89,7 +89,7 @@ async function findUser() {
 
     try {
         // Fetch the user data from the backend
-        const response = await fetch(`${baseUrl}/user?id=${encodeURIComponent(id)}`, {
+        const response = await fetch(`${baseUrl}/users/get?id=${id}`, {
             method: 'GET',
         });
 
@@ -112,5 +112,35 @@ async function findUser() {
     } catch (error) {
         console.error("Error fetching user:", error);
         alert("Failed to find user. Please check the console for details.");
+    }
+}
+async function filterUsers() {
+    const filter = document.getElementById('filterInput').value;
+
+    // Формируем URL с параметром фильтра
+    const url = `${baseUrl}/filter_user?filter=${filter}`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (response.ok) {
+            const users = await response.json();
+            const userList = document.getElementById('userList');
+            userList.innerHTML = ""; // Очистить список
+
+            users.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = `ID: ${user.id}, Nickname: ${user.nickname}, Password: ${user.password}`;
+                userList.appendChild(li);
+            });
+        } else {
+            alert("Failed to fetch users: " + response.status);
+        }
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        alert("Error occurred while fetching users.");
     }
 }
