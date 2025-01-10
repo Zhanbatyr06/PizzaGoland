@@ -144,3 +144,21 @@ async function filterUsers() {
         alert("Error occurred while fetching users.");
     }
 }
+async function sortUsers(){
+    const sort = document.getElementById('sortInput').value;
+    const url = `${baseUrl}/sort_user?sort=${sort}`;
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (response.ok) {
+            const users = await response.json();
+        }
+    }
+    catch (error) {
+        console.error("Error fetching users:", error);
+        alert("Error occurred while fetching users.");
+    }
+
+}
