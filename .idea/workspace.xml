@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8082fb38-714c-4f68-992a-27f5719f8d36" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/http/controllers/users/pagination.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/serve_html.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/serve_html.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/http/controllers/users/controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/users/controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/http/controllers/users/pagination.go" beforeDir="false" afterPath="$PROJECT_DIR$/http/controllers/users/pagination.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middlewares/rate_limiter.go" beforeDir="false" afterPath="$PROJECT_DIR$/middlewares/rate_limiter.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/repository/users/repo.go" beforeDir="false" afterPath="$PROJECT_DIR$/repository/users/repo.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/static/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/script.js" afterDir="false" />
@@ -113,5 +116,16 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/http/controllers/users/controller.go</url>
+          <line>15</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

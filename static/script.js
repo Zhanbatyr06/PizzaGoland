@@ -2,23 +2,34 @@ const baseUrl = "http://localhost:8080/";
 
 
 async function addUser() {
+    const nickname = document.getElementById('nickname').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-    const nickname = document.getElementById('nickname').value;
-    const password = document.getElementById('password').value;
+    if (!nickname || !password) {
+        alert("Please enter both nickname and password.");
+        return;
+    }
 
-    const response = await fetch(`${baseUrl}/add_user`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nickname, password })
-    });
-    console.log(JSON.stringify({ nickname, password }));
+    try {
+        const response = await fetch(`${baseUrl}/add_user`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nickname, password }),
+        });
 
+        const responseText = await response.text();
+        console.log("Server response:", responseText);
 
-    if (response.ok) {
-        alert("User added successfully!");
-        getUsers();
-    } else {
-        alert("Failed to add user.");
+        if (response.ok) {
+            alert("User added successfully!");
+            getUsers(); // Обновить список пользователей
+        } else {
+            console.error("Failed to add user:", responseText);
+            alert("Failed to add user.");
+        }
+    } catch (error) {
+        console.error("Error adding user:", error);
+        alert("Network error occurred while adding user.");
     }
 }
 
@@ -178,12 +189,15 @@ async function sortUsers() {
         console.error("Error fetching users:", error);
         alert("Error occurred while fetching users.");
     }
-}
-let currentPage = 1;
-const limit = 4; //
 
-async function fetchUsers(page = 1) {
-    const url = `${baseUrl}/users?page=${page}&limit=${limit}`;
+}
+let currentPage = 1; // Текущая страница
+const limit = 4; // Количество элементов на страницу
+
+
+
+async function fetchUsers(page = 1, limit = 4) {
+    const url = `${baseUrl}/pagination?limit=${limit}&page=${page}`;
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -192,49 +206,55 @@ async function fetchUsers(page = 1) {
 
         if (response.ok) {
             const result = await response.json();
-            const users = result.data; // Пользователи
-            const totalPages = result.totalPages; // Всего страниц
-            currentPage = result.currentPage; // Текущая страница
+            console.log("Fetched data:", result);
 
-            // Обновить интерфейс
-            const userList = document.getElementById('userList');
-            userList.innerHTML = ""; // Очистить текущий список
-            users.forEach(user => {
-                const li = document.createElement('li');
-                li.textContent = `ID: ${user.id}, Nickname: ${user.nickname}`;
-                userList.appendChild(li);
-            });
-
-            // Обновить кнопки пагинации
-            updatePaginationControls(totalPages);
+            // Отобразить пользователей
+            displayUsers(result.data);
+            updatePaginationControls(result.totalPages, page);
         } else {
-            console.error("Failed to fetch users. Status:", response.status);
+            alert("Failed to fetch users");
         }
     } catch (error) {
         console.error("Error fetching users:", error);
+        alert("Network error occurred.");
     }
 }
 
-function updatePaginationControls(totalPages) {
-    const prevButton = document.querySelector('#paginationControls button:nth-child(1)');
-    const nextButton = document.querySelector('#paginationControls button:nth-child(3)');
+function displayUsers(users) {
+    const userList = document.getElementById('userList');
+    userList.innerHTML = "";
+
+    users.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = `ID: ${user.id}, Nickname: ${user.nickname}`;
+        userList.appendChild(li);
+    });
+}
+
+function updatePaginationControls(totalPages, currentPage) {
+    const prevButton = document.getElementById('prevPage');
+    const nextButton = document.getElementById('nextPage');
     const currentPageSpan = document.getElementById('currentPage');
 
-    prevButton.disabled = currentPage <= 1;
-    nextButton.disabled = currentPage >= totalPages;
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage === totalPages;
+
     currentPageSpan.textContent = currentPage;
 }
 
 function nextPage() {
     currentPage++;
-    fetchUsers(currentPage);
+    fetchUsers(currentPage, limit);
 }
 
 function prevPage() {
-    currentPage--;
-    fetchUsers(currentPage);
+    if (currentPage > 1) {
+        currentPage--;
+        fetchUsers(currentPage, limit);
+    }
 }
 
-// Первоначальная загрузка
-fetchUsers();
+document.addEventListener('DOMContentLoaded', () => {
+    fetchUsers(currentPage, limit);
+});
 

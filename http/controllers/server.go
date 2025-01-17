@@ -22,8 +22,7 @@ func New(usersR *users2.Repo) Server {
 	mux.Handle("/", http.FileServer(http.Dir("./static")))
 	return Server{
 		httpServer: &http.Server{
-			Addr:    ":8080",
-			Handler: mux,
+			Addr: ":8080",
 		},
 	}
 }

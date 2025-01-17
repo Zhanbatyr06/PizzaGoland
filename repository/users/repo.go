@@ -197,9 +197,31 @@ func (r *Repo) UserSorting(typeofsorting string) ([]models.User, error) {
 	return users, nil
 }
 
-//func (r *Repo) UserPaging(page int, limit int) ([]models.User, error) {
-//	utils.Logger.WithField("action", "fetch_users_by_paging").Info("Fetching all users by paging")
-//}
+func (r *Repo) UserPaging(skip int, limit int) ([]models.User, error) {
+	utils.Logger.WithField("action", "fetch_users_by_paging").Info("Fetching all users by paging")
+	findOptions := options.Find()
+	findOptions.SetLimit(int64(limit))
+	findOptions.SetSkip(int64(skip))
+	findOptions.SetSort(bson.D{{"createdAt", 1}}) // Сортировка по дате создания
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	cursor, err := r.coll.Find(ctx, bson.M{}, findOptions)
+	if err != nil {
+		utils.Logger.WithField("error", err).Error("Failed to fetch users")
+		return nil, err
+	}
+	defer cursor.Close(ctx)
+
+	var users []models.User
+	if err := cursor.All(ctx, &users); err != nil {
+		utils.Logger.WithField("error", err).Error("Failed to decode users")
+		return nil, err
+	}
+
+	return users, nil
+}
 
 func (r Repo) getObjectID(id string) (primitive.ObjectID, error) {
 	return primitive.ObjectIDFromHex(id)

@@ -14,6 +14,7 @@ func New(repo *users.Repo) *Controller {
 }
 
 func (c Controller) Register(mux *http.ServeMux) {
+
 	mux.HandleFunc("/users/get", c.getUser)
 	mux.HandleFunc("/add_user", c.createUser)
 	mux.HandleFunc("/delete_user", c.deleteUser)
