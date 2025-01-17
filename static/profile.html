@@ -19,27 +19,11 @@
 </form>
 
 <hr>
+<h2>Your Orders</h2>
+<ul id="ordersList"></ul>
+
 <h2>Interaction History</h2>
 <ul id="interactionHistory"></ul>
-
-<script>
-    async function fetchInteractions() {
-        const userId = "67890"; // Замените на текущий userId
-        const response = await fetch(`/api/interactions?userId=${userId}`);
-        const interactions = await response.json();
-
-        const historyList = document.getElementById("interactionHistory");
-        historyList.innerHTML = "";
-
-        interactions.forEach(interaction => {
-            const li = document.createElement("li");
-            li.textContent = `${interaction.type} - ${interaction.details.productName || "No details"} (${new Date(interaction.timestamp).toLocaleString()})`;
-            historyList.appendChild(li);
-        });
-    }
-
-    fetchInteractions();
-</script>
 
 <!-- Сообщение в поддержку -->
 <h2>Contact Support</h2>
@@ -56,5 +40,6 @@
     <button type="submit">Send</button>
 </form>
 
+<script src="script.js"></script>
 </body>
 </html>

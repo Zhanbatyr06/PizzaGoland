@@ -2,34 +2,23 @@ const baseUrl = "http://localhost:8080/";
 
 
 async function addUser() {
-    const nickname = document.getElementById('nickname').value.trim();
-    const password = document.getElementById('password').value.trim();
 
-    if (!nickname || !password) {
-        alert("Please enter both nickname and password.");
-        return;
-    }
+    const nickname = document.getElementById('nickname').value;
+    const password = document.getElementById('password').value;
 
-    try {
-        const response = await fetch(`${baseUrl}/add_user`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nickname, password }),
-        });
+    const response = await fetch(`${baseUrl}/add_user`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nickname, password })
+    });
+    console.log(JSON.stringify({ nickname, password }));
 
-        const responseText = await response.text();
-        console.log("Server response:", responseText);
 
-        if (response.ok) {
-            alert("User added successfully!");
-            getUsers(); // Обновить список пользователей
-        } else {
-            console.error("Failed to add user:", responseText);
-            alert("Failed to add user.");
-        }
-    } catch (error) {
-        console.error("Error adding user:", error);
-        alert("Network error occurred while adding user.");
+    if (response.ok) {
+        alert("User added successfully!");
+        getUsers();
+    } else {
+        alert("Failed to add user.");
     }
 }
 
@@ -155,106 +144,45 @@ async function filterUsers() {
         alert("Error occurred while fetching users.");
     }
 }
-async function sortUsers() {
-    const sort = document.getElementById('sortingInput').value;
-    console.log(`Sorting criteria: ${sort}`);
-
+async function sortUsers(){
+    const sort = document.getElementById('sortInput').value;
     const url = `${baseUrl}/sort_user?sort=${sort}`;
-    console.log(`Request URL: ${url}`);
-
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
-        console.log(`Response status: ${response.status}`);
-
         if (response.ok) {
             const users = await response.json();
-            console.log("Fetched users:", users);
-
-            const userList = document.getElementById('userList');
-            userList.innerHTML = "";
-
-            users.forEach(user => {
-                const li = document.createElement('li');
-                li.textContent = `ID: ${user.id}, Nickname: ${user.nickname}, Password: ${user.password}`;
-                userList.appendChild(li);
-            });
-        } else {
-            console.error("Failed to fetch users. Status:", response.status);
-            alert("Failed to fetch users.");
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error("Error fetching users:", error);
         alert("Error occurred while fetching users.");
     }
 
 }
-let currentPage = 1; // Текущая страница
-const limit = 4; // Количество элементов на страницу
 
+document.addEventListener("DOMContentLoaded", () => {
+    const userId = "67890"; // Укажите ID пользователя
 
-
-async function fetchUsers(page = 1, limit = 4) {
-    const url = `${baseUrl}/pagination?limit=${limit}&page=${page}`;
-    try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (response.ok) {
-            const result = await response.json();
-            console.log("Fetched data:", result);
-
-            // Отобразить пользователей
-            displayUsers(result.data);
-            updatePaginationControls(result.totalPages, page);
-        } else {
-            alert("Failed to fetch users");
-        }
-    } catch (error) {
-        console.error("Error fetching users:", error);
-        alert("Network error occurred.");
-    }
-}
-
-function displayUsers(users) {
-    const userList = document.getElementById('userList');
-    userList.innerHTML = "";
-
-    users.forEach(user => {
-        const li = document.createElement('li');
-        li.textContent = `ID: ${user.id}, Nickname: ${user.nickname}`;
-        userList.appendChild(li);
-    });
-}
-
-function updatePaginationControls(totalPages, currentPage) {
-    const prevButton = document.getElementById('prevPage');
-    const nextButton = document.getElementById('nextPage');
-    const currentPageSpan = document.getElementById('currentPage');
-
-    prevButton.disabled = currentPage === 1;
-    nextButton.disabled = currentPage === totalPages;
-
-    currentPageSpan.textContent = currentPage;
-}
-
-function nextPage() {
-    currentPage++;
-    fetchUsers(currentPage, limit);
-}
-
-function prevPage() {
-    if (currentPage > 1) {
-        currentPage--;
-        fetchUsers(currentPage, limit);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    fetchUsers(currentPage, limit);
+    fetch(`/interactions?userId=${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                console.error("Failed to fetch interactions");
+                return [];
+            }
+            return response.json();
+        })
+        .then(interactions => {
+            const historyList = document.getElementById('interactionHistory');
+            historyList.innerHTML = ""; // Очистка списка перед добавлением новых элементов
+            interactions.forEach(interaction => {
+                const li = document.createElement('li');
+                li.textContent = `${interaction.Type} at ${interaction.Details.Timestamp}`;
+                historyList.appendChild(li);
+            });
+        })
+        .catch(err => console.error("Error loading interactions:", err));
 });
 

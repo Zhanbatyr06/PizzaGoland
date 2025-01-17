@@ -2,6 +2,7 @@ package users
 
 import (
 	"github.com/Zhanbatyr06/PizzaGoland/repository/users"
+
 	"net/http"
 )
 
@@ -14,7 +15,6 @@ func New(repo *users.Repo) *Controller {
 }
 
 func (c Controller) Register(mux *http.ServeMux) {
-
 	mux.HandleFunc("/users/get", c.getUser)
 	mux.HandleFunc("/add_user", c.createUser)
 	mux.HandleFunc("/delete_user", c.deleteUser)
@@ -24,5 +24,6 @@ func (c Controller) Register(mux *http.ServeMux) {
 	mux.HandleFunc("/sort_user", c.SortingUser)
 	mux.HandleFunc("/support", SupportHandler)
 	mux.HandleFunc("/profile", ProfileHandler)
-	mux.HandleFunc("/pagination", c.Pagination)
+	mux.HandleFunc("/update-profile", UpdateProfileHandler)
+
 }
