@@ -28,7 +28,7 @@ func NewApp() (*App, error) {
 	if err != nil {
 		return nil, err
 	}
-	app.usersR = users.NewRepo(app.mongoDB)
+	app.usersR = users.NewRepo(app.mongoDB, false)
 	app.httpSrv = controllers.New(app.usersR)
 	return app, nil
 }

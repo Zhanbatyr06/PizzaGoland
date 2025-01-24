@@ -18,12 +18,21 @@ type Repo struct {
 	coll *mongo.Collection
 }
 
-func NewRepo(db *mongo.Database) *Repo {
-	return &Repo{db.Collection("users")}
+func NewRepo(db *mongo.Database, isTest bool) *Repo {
+	var coll *mongo.Collection
+
+	if isTest {
+		coll = db.Collection("userstest")
+	} else {
+		coll = db.Collection("users")
+	}
+
+	return &Repo{
+		coll: coll,
+	}
 }
 
 func (r Repo) Create(user *models.User) error {
-
 	utils.Logger.WithField("action", "add_user").Info("Adding new user")
 	result, err := r.coll.InsertOne(context.Background(), user)
 	if err != nil {
