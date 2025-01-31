@@ -3,13 +3,15 @@ module github.com/Zhanbatyr06/PizzaGoland
 go 1.23.4
 
 require (
+	github.com/go-gomail/gomail v0.0.0-20160411212932-81ebce5c23df
 	github.com/sirupsen/logrus v1.9.3
+	github.com/tebeka/selenium v0.9.9
 	go.mongodb.org/mongo-driver v1.17.2
 	golang.org/x/time v0.9.0
 )
 
 require (
-	github.com/go-gomail/gomail v0.0.0-20160411212932-81ebce5c23df // indirect
+	github.com/blang/semver v3.5.1+incompatible // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/klauspost/compress v1.17.11 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
@@ -22,4 +24,5 @@ require (
 	golang.org/x/sys v0.29.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
+	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
 )

@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8080/";
+const baseUrl = "http://localhost:8080";
 
 
 async function addUser() {
@@ -9,9 +9,9 @@ async function addUser() {
     const response = await fetch(`${baseUrl}/add_user`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nickname, password })
+        body: JSON.stringify({ nickname, password, })
     });
-    console.log(JSON.stringify({ nickname, password }));
+    console.log(JSON.stringify({ nickname, password, }));
 
 
     if (response.ok) {
@@ -163,26 +163,26 @@ async function sortUsers(){
 
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const userId = "67890"; // Укажите ID пользователя
-
-    fetch(`/interactions?userId=${userId}`)
-        .then(response => {
-            if (!response.ok) {
-                console.error("Failed to fetch interactions");
-                return [];
-            }
-            return response.json();
-        })
-        .then(interactions => {
-            const historyList = document.getElementById('interactionHistory');
-            historyList.innerHTML = ""; // Очистка списка перед добавлением новых элементов
-            interactions.forEach(interaction => {
-                const li = document.createElement('li');
-                li.textContent = `${interaction.Type} at ${interaction.Details.Timestamp}`;
-                historyList.appendChild(li);
-            });
-        })
-        .catch(err => console.error("Error loading interactions:", err));
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     const userId = "67890"; // Укажите ID пользователя
+//
+//     fetch(`/interactions?userId=${userId}`)
+//         .then(response => {
+//             if (!response.ok) {
+//                 console.error("Failed to fetch interactions");
+//                 return [];
+//             }
+//             return response.json();
+//         })
+//         .then(interactions => {
+//             const historyList = document.getElementById('interactionHistory');
+//             historyList.innerHTML = ""; // Очистка списка перед добавлением новых элементов
+//             interactions.forEach(interaction => {
+//                 const li = document.createElement('li');
+//                 li.textContent = `${interaction.Type} at ${interaction.Details.Timestamp}`;
+//                 historyList.appendChild(li);
+//             });
+//         })
+//         .catch(err => console.error("Error loading interactions:", err));
+// });
 

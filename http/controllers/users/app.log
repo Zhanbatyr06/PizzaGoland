@@ -1,0 +1,86 @@
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T14:18:25+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T14:18:25+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T14:18:25+05:00","user_id":"67935ae1664c51af7f5d06c1"}
+{"action":"fetch_users_by_filter","level":"info","msg":"Fetching all users by filter","time":"2025-01-24T14:18:25+05:00"}
+{"filter":{"nickname":{"$options":"i","$regex":"testuser"}},"level":"info","msg":"Applying filter to MongoDB query","time":"2025-01-24T14:18:25+05:00"}
+{"count":1,"level":"info","msg":"Users fetched successfully","time":"2025-01-24T14:18:25+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T15:26:03+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T15:26:03+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T15:26:03+05:00","user_id":"67936abbfc0f1571a02205bd"}
+{"action":"fetch_users_by_filter","level":"info","msg":"Fetching all users by filter","time":"2025-01-24T15:26:03+05:00"}
+{"filter":{"nickname":{"$options":"i","$regex":"testuser"}},"level":"info","msg":"Applying filter to MongoDB query","time":"2025-01-24T15:26:03+05:00"}
+{"count":2,"level":"info","msg":"Users fetched successfully","time":"2025-01-24T15:26:03+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T15:26:43+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T15:26:43+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T15:26:43+05:00","user_id":"67936ae380dd1765b60bc728"}
+{"action":"fetch_users_by_filter","level":"info","msg":"Fetching all users by filter","time":"2025-01-24T15:26:43+05:00"}
+{"filter":{"nickname":{"$options":"i","$regex":"testuser"}},"level":"info","msg":"Applying filter to MongoDB query","time":"2025-01-24T15:26:43+05:00"}
+{"count":3,"level":"info","msg":"Users fetched successfully","time":"2025-01-24T15:26:43+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T15:31:03+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T15:31:03+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T15:31:03+05:00","user_id":"67936be716eb18072d177863"}
+{"action":"fetch_users_by_filter","level":"info","msg":"Fetching all users by filter","time":"2025-01-24T15:31:03+05:00"}
+{"filter":{"nickname":{"$options":"i","$regex":"testuser"}},"level":"info","msg":"Applying filter to MongoDB query","time":"2025-01-24T15:31:03+05:00"}
+{"count":4,"level":"info","msg":"Users fetched successfully","time":"2025-01-24T15:31:03+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T17:31:30+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T17:31:30+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T17:31:30+05:00","user_id":"6793882282d5e552f9e3ae4d"}
+{"action":"fetch_users_by_filter","level":"info","msg":"Fetching all users by filter","time":"2025-01-24T17:31:30+05:00"}
+{"filter":{"nickname":{"$options":"i","$regex":"testuser"}},"level":"info","msg":"Applying filter to MongoDB query","time":"2025-01-24T17:31:30+05:00"}
+{"count":5,"level":"info","msg":"Users fetched successfully","time":"2025-01-24T17:31:30+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T17:32:09+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T17:32:09+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T17:32:09+05:00","user_id":"679388493c20c0cd6aa318c4"}
+{"action":"fetch_users_by_filter","level":"info","msg":"Fetching all users by filter","time":"2025-01-24T17:32:09+05:00"}
+{"filter":{"nickname":{"$options":"i","$regex":"testuser"}},"level":"info","msg":"Applying filter to MongoDB query","time":"2025-01-24T17:32:09+05:00"}
+{"count":6,"level":"info","msg":"Users fetched successfully","time":"2025-01-24T17:32:09+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T17:34:15+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T17:34:15+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T17:34:15+05:00","user_id":"679388c7731c6d8581fde661"}
+{"action":"fetch_users_by_filter","level":"info","msg":"Fetching all users by filter","time":"2025-01-24T17:34:15+05:00"}
+{"filter":{"nickname":{"$options":"i","$regex":"testuser"}},"level":"info","msg":"Applying filter to MongoDB query","time":"2025-01-24T17:34:15+05:00"}
+{"count":1,"level":"info","msg":"Users fetched successfully","time":"2025-01-24T17:34:15+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T17:38:37+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T17:38:37+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T17:38:37+05:00","user_id":"679389cdbb6dc785f492a012"}
+{"action":"fetch_users_by_filter","level":"info","msg":"Fetching all users by filter","time":"2025-01-24T17:38:37+05:00"}
+{"filter":{"nickname":{"$options":"i","$regex":"testuser"}},"level":"info","msg":"Applying filter to MongoDB query","time":"2025-01-24T17:38:37+05:00"}
+{"count":1,"level":"info","msg":"Users fetched successfully","time":"2025-01-24T17:38:37+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T17:40:57+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T17:40:57+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T17:40:57+05:00","user_id":"67938a59a70dcaed9f3913bd"}
+{"action":"fetch_users_by_filter","level":"info","msg":"Fetching all users by filter","time":"2025-01-24T17:40:57+05:00"}
+{"filter":{"nickname":{"$options":"i","$regex":"testuser"}},"level":"info","msg":"Applying filter to MongoDB query","time":"2025-01-24T17:40:57+05:00"}
+{"count":1,"level":"info","msg":"Users fetched successfully","time":"2025-01-24T17:40:57+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T17:42:02+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T17:42:02+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T17:42:02+05:00","user_id":"67938a9af76cd82daa13ce46"}
+{"action":"fetch_users_by_filter","level":"info","msg":"Fetching all users by filter","time":"2025-01-24T17:42:02+05:00"}
+{"filter":{"nickname":{"$options":"i","$regex":"testuser1"}},"level":"info","msg":"Applying filter to MongoDB query","time":"2025-01-24T17:42:02+05:00"}
+{"count":0,"level":"info","msg":"Users fetched successfully","time":"2025-01-24T17:42:02+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T19:38:28+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T19:38:28+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T19:38:28+05:00","user_id":"6793a5e4bec519d4fc4f353f"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T19:39:55+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T19:39:55+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T19:39:55+05:00","user_id":"6793a63ba1d36473b1b3aae4"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T20:22:25+05:00"}
+{"action":"add_user","level":"info","msg":"Adding new user","time":"2025-01-24T20:22:25+05:00"}
+{"level":"info","msg":"User added successfully","time":"2025-01-24T20:22:25+05:00","user_id":"6793b0311abf2c0a01e30798"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T23:07:22+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T23:32:06+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T23:33:21+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-24T23:33:40+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-27T14:29:38+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-27T15:56:38+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-27T16:00:19+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-27T16:02:13+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-27T16:21:44+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-27T16:22:37+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-27T16:45:11+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-29T13:48:46+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-29T16:26:27+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-29T16:27:48+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-29T16:28:18+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-29T16:28:44+05:00"}
+{"filePath":"app.log","level":"info","msg":"Logging to file initialized","time":"2025-01-29T16:44:43+05:00"}

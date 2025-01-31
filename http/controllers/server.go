@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/Zhanbatyr06/PizzaGoland/http/controllers/users"
 	users2 "github.com/Zhanbatyr06/PizzaGoland/repository/users"
-	"net/http"
 )
 
 type Server struct {
@@ -14,15 +14,27 @@ type Server struct {
 }
 
 func New(usersR *users2.Repo) Server {
+	// Создаем новый маршрутизатор
 	mux := http.NewServeMux()
+
+	// Регистрируем контроллеры пользователей
 	usersC := users.New(usersR)
 	usersC.Register(mux)
-	//staticC := NewStaticController("/static")
-	//mux.HandleFunc("/", staticC.ServeHTML)
-	mux.Handle("/", http.FileServer(http.Dir("./static")))
+
+	// Регистрируем обработчик для статических файлов
+	staticPath := "D:/AITUAssignments/PizzaGoland/static"
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(staticPath))))
+
+	// Регистрируем обработчик для главной страницы
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, staticPath+"/index.html")
+	})
+
+	// Создаем и возвращаем сервер
 	return Server{
 		httpServer: &http.Server{
-			Addr: ":8080",
+			Addr:    ":8080",
+			Handler: mux, // Назначаем маршрутизатор обработчиком
 		},
 	}
 }
