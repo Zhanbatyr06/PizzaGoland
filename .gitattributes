@@ -1,0 +1,10 @@
+# Set all files to use LF line endings
+* text=auto
+
+# Force specific file types to use LF line endings
+*.go text eol=lf
+*.mod text eol=lf
+*.sum text eol=lf
+
+# Treat binary files as-is (no line-ending conversion)
+*.log binary
